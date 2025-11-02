@@ -1,9 +1,9 @@
 # Complex SQL Queries 
 
+---
+
 ## **1. Joins: Objective**
 This task demonstrates mastery of SQL joins in the **Airbnb Database Schema**, using different join types to retrieve relational data between users, properties, bookings, and reviews.
-
----
 
 ### i. INNER JOIN — Bookings with Users
 **Description:**  
@@ -25,8 +25,6 @@ FROM bookings b
 INNER JOIN users u ON b.user_id = u.id;
 ```
 
----
-
 ### ii. LEFT JOIN — Properties with Reviews
 **Description:**
 Retrieves all properties, including those without reviews.
@@ -45,8 +43,6 @@ SELECT
 FROM properties p
 LEFT JOIN reviews r ON p.id = r.property_id;
 ```
-
----
 
 ### iii. FULL OUTER JOIN — All Users and All Bookings
 **Description:**
@@ -89,15 +85,9 @@ FROM users u
 RIGHT JOIN bookings b ON u.id = b.user_id;
 ```
 
----
-
 ### Files Included
 
-- joins_queries.sql — Contains the SQL join queries.
-
-- README.md — Explains each query and its purpose.
-
----
+- `joins_queries.sql` — Contains the SQL join queries.
 
 ### Directory Structure
 ```pgsql
@@ -111,8 +101,6 @@ alx-airbnb-database/
 
 ## **2. Subqueries: Objective**
 The goal of this task is to practice writing **correlated and non-correlated subqueries** using the Airbnb clone database schema.
-
----
 
 ### i. Non-Correlated Subquery
 **Description:** 
@@ -132,8 +120,6 @@ WHERE property_id IN (
 );
 ```
 
----
-
 ### ii. Correlated Subquery  
 **Description:** 
 
@@ -151,7 +137,8 @@ WHERE (
 ) > 3;
 ```
 
-The SQL queries are stored in the file:  
+### Files Included
+- The SQL queries are stored in the file:  
 `subqueries.sql`
 
 ### Directory Structure
@@ -161,3 +148,48 @@ alx-airbnb-database/
     ├── subqueries.sql
     └── README.md
 ```
+
+---
+
+## 3. Aggregations and Window Functions: Objective
+Here, SQL aggregation and window functions are used to analyze the Airbnb clone data.
+
+### i. Total Bookings per User
+**Description:**
+   - Use `COUNT()` and `GROUP BY` to find the total number of bookings made by each user.
+
+**Query**
+```sql
+SELECT u.user_id, u.first_name, u.last_name, COUNT(b.booking_id) AS total_bookings
+FROM User u
+LEFT JOIN Booking b ON u.user_id = b.user_id
+GROUP BY u.user_id, u.first_name, u.last_name
+ORDER BY total_bookings DESC;
+```
+
+### ii. Rank Properties by Bookings
+**Description:**
+   - Use a window function (`RANK()`, `ROW_NUMBER()`) to rank properties based on the total bookings they have received.
+
+**Query**
+```sql
+SELECT p.property_id, p.name, COUNT(b.booking_id) AS total_bookings,
+       RANK() OVER (ORDER BY COUNT(b.booking_id) DESC) AS booking_rank
+FROM Property p
+LEFT JOIN Booking b ON p.property_id = b.property_id
+GROUP BY p.property_id, p.name
+ORDER BY booking_rank;
+```
+
+### Files Included
+- The SQL queries are stored in the file: `aggregations_and_window_functions.sql`
+
+### Directory Structure
+```pgsql
+alx-airbnb-database/
+└── database-adv-script/
+    ├── subqueries.sql
+    └── README.md
+```
+
+---
