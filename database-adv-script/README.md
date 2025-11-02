@@ -1,11 +1,11 @@
 # Complex SQL Queries 
 
-## **Joins: Objective**
+## **1. Joins: Objective**
 This task demonstrates mastery of SQL joins in the **Airbnb Database Schema**, using different join types to retrieve relational data between users, properties, bookings, and reviews.
 
 ---
 
-### 1️. INNER JOIN — Bookings with Users
+### i. INNER JOIN — Bookings with Users
 **Description:**  
 Retrieves all bookings along with details of the users who made them.
 
@@ -27,7 +27,7 @@ INNER JOIN users u ON b.user_id = u.id;
 
 ---
 
-### 2. LEFT JOIN — Properties with Reviews
+### ii. LEFT JOIN — Properties with Reviews
 **Description:**
 Retrieves all properties, including those without reviews.
 
@@ -48,7 +48,7 @@ LEFT JOIN reviews r ON p.id = r.property_id;
 
 ---
 
-### 3. FULL OUTER JOIN — All Users and All Bookings
+### iii. FULL OUTER JOIN — All Users and All Bookings
 **Description:**
 Retrieves all users and all bookings, including:
 
@@ -107,12 +107,14 @@ alx-airbnb-database/
     └── README.md
 ```
 
-## **Subqueries: Objective**
+---
+
+## **2. Subqueries: Objective**
 The goal of this task is to practice writing **correlated and non-correlated subqueries** using the Airbnb clone database schema.
 
 ---
 
-### 1. Non-Correlated Subquery
+### i. Non-Correlated Subquery
 **Description:** 
 
    - Finds all properties where the **average rating** is greater than 4.0.  
@@ -132,7 +134,7 @@ WHERE property_id IN (
 
 ---
 
-### 2. Correlated Subquery  
+### ii. Correlated Subquery  
 **Description:** 
 
    - Finds all users who have made **more than 3 bookings**.  
