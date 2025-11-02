@@ -1,4 +1,4 @@
--- Total bookings per user
+-- 1. Total bookings per user
 SELECT 
     u.user_id,
     u.first_name,
@@ -10,8 +10,7 @@ LEFT JOIN Booking b
 GROUP BY u.user_id, u.first_name, u.last_name
 ORDER BY total_bookings DESC;
 
-
--- Rank properties by total bookings using ROW_NUMBER()
+-- 2. Rank properties by total bookings using ROW_NUMBER()
 SELECT 
     p.property_id,
     p.name,
