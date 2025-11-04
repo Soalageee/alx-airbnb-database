@@ -29,11 +29,24 @@ CREATE TABLE IF NOT EXISTS Properties (
     location VARCHAR(150) NOT NULL,
     pricepernight DECIMAL(10,2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (host_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_property_id ON Properties(property_id);
+CREATE OR REPLACE FUNCTION update_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Whenever a row changes, set 'updated_at' to the current time
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create a trigger that runs the function before any update
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON Properties
+FOR EACH ROW
+EXECUTE FUNCTION update_timestamp();
 
 -- ========================================
 -- 3. Booking Table
