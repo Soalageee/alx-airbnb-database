@@ -22,7 +22,7 @@ CREATE INDEX idx_user_email ON Users(email);
 -- 2. Property Table
 -- ========================================
 CREATE TABLE IF NOT EXISTS Properties (
-    property_id UUID PRIMARY KEY,
+    property_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     host_id UUID NOT NULL,
     name VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
@@ -52,7 +52,7 @@ EXECUTE FUNCTION update_timestamp();
 -- 3. Booking Table
 -- ========================================
 CREATE TABLE IF NOT EXISTS Bookings (
-    booking_id UUID PRIMARY KEY,
+    booking_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     property_id UUID NOT NULL,
     user_id UUID NOT NULL,
     start_date DATE NOT NULL,
@@ -71,7 +71,7 @@ CREATE INDEX idx_booking_user_id ON Bookings(user_id);
 -- 4. Payment Table
 -- ========================================
 CREATE TABLE IF NOT EXISTS Payments (
-    payment_id UUID PRIMARY KEY,
+    payment_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     booking_id UUID NOT NULL UNIQUE,
     amount DECIMAL(10,2) NOT NULL,
     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -85,7 +85,7 @@ CREATE INDEX idx_payment_booking_id ON Payments(booking_id);
 -- 5. Review Table
 -- ========================================
 CREATE TABLE IF NOT EXISTS Reviews (
-    review_id UUID PRIMARY KEY,
+    review_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     property_id UUID NOT NULL,
     user_id UUID NOT NULL,
     rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
@@ -102,7 +102,7 @@ CREATE INDEX idx_review_user_id ON Reviews(user_id);
 -- 6. Message Table
 -- ========================================
 CREATE TABLE IF NOT EXISTS Messages (
-    message_id UUID PRIMARY KEY,
+    message_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     sender_id UUID NOT NULL,
     recipient_id UUID NOT NULL,
     message_body TEXT NOT NULL,
