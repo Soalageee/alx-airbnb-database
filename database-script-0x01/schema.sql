@@ -6,7 +6,7 @@
 -- 1. User Table
 -- ========================================
 CREATE TABLE IF NOT EXISTS Users (
-    user_id UUID PRIMARY KEY,
+    user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
