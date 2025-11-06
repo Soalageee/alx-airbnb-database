@@ -12,17 +12,15 @@ Retrieves all bookings along with details of the users who made them.
 **Query:**
 ```sql
 SELECT 
-    b.id AS booking_id,
-    u.id AS user_id,
-    u.first_name,
-    u.last_name,
-    u.email,
-    b.property_id,
+    b.booking_id,
     b.start_date,
     b.end_date,
-    b.total_price
-FROM bookings b
-INNER JOIN users u ON b.user_id = u.id;
+    u.first_name, 
+    u.last_name,
+    u.email
+FROM Bookings b
+INNER JOIN Users u
+ON b.user_id = u.user_id;
 ```
 
 ### ii. LEFT JOIN — Properties with Reviews
@@ -32,16 +30,14 @@ Retrieves all properties, including those without reviews.
 **Query:**
 ```sql
 SELECT 
-    p.id AS property_id,
-    p.name AS property_name,
-    p.location,
-    p.price_per_night,
-    r.id AS review_id,
-    r.rating,
-    r.comment,
-    r.created_at
-FROM properties p
-LEFT JOIN reviews r ON p.id = r.property_id;
+    P.name AS property_name,
+    p.location AS property_address,
+    r.rating AS property_rating,
+    r.comment AS property_review,
+    r.created_at AS date_of_review
+FROM Properties P
+LEFT JOIN Reviews r ON p.property_id = r.property_id
+ORDER BY r.created_at ASC;
 ```
 
 ### iii. FULL OUTER JOIN — All Users and All Bookings
@@ -57,32 +53,17 @@ Since MySQL/MariaDB does not support FULL OUTER JOIN natively, we simulate it us
 **Query:**
 ```sql
 SELECT 
-    u.id AS user_id,
     u.first_name,
     u.last_name,
     u.email,
-    b.id AS booking_id,
-    b.property_id,
+    u.phone_number,
     b.start_date,
     b.end_date,
-    b.total_price
-FROM users u
-LEFT JOIN bookings b ON u.id = b.user_id
-
-UNION
-
-SELECT 
-    u.id AS user_id,
-    u.first_name,
-    u.last_name,
-    u.email,
-    b.id AS booking_id,
-    b.property_id,
-    b.start_date,
-    b.end_date,
-    b.total_price
-FROM users u
-RIGHT JOIN bookings b ON u.id = b.user_id;
+    b.total_price,
+    b.booking_id
+FROM Users u
+FULL JOIN Bookings b
+ON u.user_id = b.user_id;
 ```
 
 ### Files Included
