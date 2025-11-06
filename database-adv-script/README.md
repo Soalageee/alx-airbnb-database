@@ -48,8 +48,6 @@ Retrieves all users and all bookings, including:
 
 - Bookings not linked to a user
 
-Since MySQL/MariaDB does not support FULL OUTER JOIN natively, we simulate it using a UNION of LEFT and RIGHT joins.
-
 **Query:**
 ```sql
 SELECT 
