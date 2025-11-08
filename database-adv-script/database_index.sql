@@ -1,3 +1,10 @@
+-- PERFORMANCE ANALYSIS
+EXPLAIN SELECT u.user_id, COUNT(b.booking_id) 
+FROM User u
+LEFT JOIN Booking b ON u.user_id = b.user_id
+GROUP BY u.user_id;
+
+
 -- INDEXES ON USERS TABLE 
 CREATE INDEX idx_user_email ON Users(email);
 
