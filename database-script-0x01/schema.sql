@@ -48,6 +48,9 @@ BEFORE UPDATE ON Properties
 FOR EACH ROW
 EXECUTE FUNCTION update_timestamp();
 
+CREATE INDEX idx_host_id ON Properties(host_id);
+CREATE INDEX idx_location ON Properties(location);
+
 -- ========================================
 -- 3. Booking Table
 -- ========================================
@@ -66,6 +69,7 @@ CREATE TABLE IF NOT EXISTS Bookings (
 
 CREATE INDEX idx_booking_property_id ON Bookings(property_id);
 CREATE INDEX idx_booking_user_id ON Bookings(user_id);
+CREATE INDEX idx_booking_status ON Bookings(status);
 
 -- ========================================
 -- 4. Payment Table
@@ -80,6 +84,7 @@ CREATE TABLE IF NOT EXISTS Payments (
 );
 
 CREATE INDEX idx_payment_booking_id ON Payments(booking_id);
+CREATE INDEX idx_payment_method ON Payments(payment_method);
 
 -- ========================================
 -- 5. Review Table
@@ -97,6 +102,7 @@ CREATE TABLE IF NOT EXISTS Reviews (
 
 CREATE INDEX idx_review_property_id ON Reviews(property_id);
 CREATE INDEX idx_review_user_id ON Reviews(user_id);
+CREATE INDEX idx_rating ON Reviews(rating);
 
 -- ========================================
 -- 6. Message Table
